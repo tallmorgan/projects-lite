@@ -37,7 +37,8 @@ class FinancialInput {
  */
 function format(value) {
   value = formatShortcuts(value);
-  return formatMoney(value.toString().replace(/\D+/g, ''));
+  value = formatToNumber(value);
+  return formatMoney(value);
 }
 
 /**
@@ -56,8 +57,17 @@ function formatShortcuts(value) {
       }
     }
 
-    return +segment;
+    return formatToNumber(segment);
   }, 0);
+}
+
+/**
+ * Sanitize a string to a number
+ * @param value
+ */
+function formatToNumber(value) {
+  value = value.toString().replace(/\D+/g, '');
+  return value;
 }
 
 /**

@@ -35,8 +35,16 @@ export default class EditController {
  * Map dispatch to controller
  */
 let mapDispatch = {
+  /**
+   * Edit or create a project
+   * @param fieldGroups
+   * @param project
+   * @returns {object}
+   */
   submitProject: (fieldGroups, project) => {
-    let fields = _.flattenDeep(fieldGroups).map((field) => {
+    let clone = JSON.parse(JSON.stringify(fieldGroups));
+
+    let fields = _.flattenDeep(clone).map((field) => {
       field.model = field.financial ? parseInt(field.model.toString().replace(/\D+/g, '')) : field.model;
       return field;
     });
