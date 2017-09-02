@@ -8,7 +8,8 @@
                 <h4>Target revenue: A - B</h4>
                 <p>Check size: X - Y</p>
             </div>
-            <md-button ui-sref="edit({project_id: project.id})" class="md-secondary">Edit</md-button>
+            <md-button ui-sref="edit({project_id: project.id})" class="md-raised md-primary">Edit</md-button>
+            <md-button ng-click="$ctrl.removeProject(project)" class="md-raised md-warn">Remove</md-button>
             <md-divider ng-if="!$last"></md-divider>
         </md-list-item>
     </md-list>
