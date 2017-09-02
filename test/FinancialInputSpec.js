@@ -47,21 +47,21 @@ describe('FinancialInputSpec', () => {
     return Promise.all(promises);
   });
 
-  // it('should format the number with commas', () => {
-  //   return new Promise((resolve) => {
-  //
-  //   });
-  // });
-  //
-  // it('should ensure the value is a number', () => {
-  //
-  // });
-  //
-  // it('should ensure the number entered for the minimum is not greater than the maximum', () => {
-  //
-  // });
-  //
-  // it('should ensure the number entered for the maximum is not less than the minimum', () => {
-  //
-  // });
+  it('should format the number with commas', () => {
+    return new Promise((resolve) => {
+      let element = $compile(defaultInput)($rootScope);
+      $rootScope.dummy = {data: '123456789'};
+      element.on('init', () => resolve(expect(element.val()).toBe('$123,456,789')));
+      $rootScope.$digest();
+    });
+  });
+
+  it('should handle invalid input elegantly (and ensure result is a number)', () => {
+    return new Promise((resolve) => {
+      let element = $compile(defaultInput)($rootScope);
+      $rootScope.dummy = {data: 'invalid input'};
+      element.on('init', () => resolve(expect(element.val()).toBe('$0')));
+      $rootScope.$digest();
+    });
+  });
 });

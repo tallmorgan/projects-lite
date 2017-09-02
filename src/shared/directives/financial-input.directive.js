@@ -29,7 +29,7 @@ class FinancialInput {
  */
 function format(value) {
   value = formatShortcuts(value);
-  return formatMoney(value);
+  return formatMoney(value.toString().replace(/\D+/g, ''));
 }
 
 /**
