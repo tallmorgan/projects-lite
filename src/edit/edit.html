@@ -1,3 +1,21 @@
 <h2>Edit {{ $ctrl.project.headline }}</h2>
 
+<md-content>
+    <md-list>
+        <md-content layout-padding>
+            <div>
+                <form name="projectForm">
+                    <div layout-gt-sm="row" data-ng-repeat="group in $ctrl.fieldGroups">
+                        <md-input-container class="md-block" flex-gt-sm data-ng-repeat="field in group">
+                            <label ng-bind="field.title"></label>
+                            <input ng-model="field.model" data-ng-attr-title="{{field.title}}"
+                                   data-ng-attr-name="{{field.name}}">
+                        </md-input-container>
+                    </div>
+                </form>
+            </div>
+        </md-content>
+    </md-list>
+</md-content>
+
 <md-button ui-sref="list" class="md-raised md-secondary">Cancel</md-button>
