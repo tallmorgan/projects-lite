@@ -19,7 +19,7 @@ export default class EditController {
    * @param fieldGroups
    */
   fillDefaults(fieldGroups) {
-    let clone = _.clone(fieldGroups);
+    let clone = JSON.parse(JSON.stringify(fieldGroups));
 
     for (let i = 0, fieldGroup; fieldGroup = clone[i]; i++) {
       for (let ii = 0, field; field = fieldGroup[ii]; ii++) {
@@ -40,6 +40,7 @@ export default class EditController {
 
     if (!this.$scope.projectForm.$invalid) {
       this.processForm(this);
+      this.fieldGroups = this.fillDefaults(fieldGroups); // reset create form
       this.$state.go('list');
     }
   }
