@@ -7,6 +7,7 @@ class FinancialInput {
   constructor(scope, element, attrs, ngModel) {
     Object.assign(this, {scope, element, attrs, ngModel});
     this.initialize();
+    element.on('blur', () => this.updateViewValue());
   }
 
   /**
@@ -14,11 +15,18 @@ class FinancialInput {
    */
   initialize() {
     let unbind = this.scope.$watch(() => {
-      this.ngModel.$setViewValue(format(this.ngModel.$viewValue));
-      this.ngModel.$render();
+      this.updateViewValue();
       this.element.triggerHandler('init');
       unbind();
     });
+  }
+
+  /**
+   * Format the input
+   */
+  updateViewValue() {
+    this.ngModel.$setViewValue(format(this.ngModel.$viewValue));
+    this.ngModel.$render();
   }
 }
 
