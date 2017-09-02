@@ -8,6 +8,6 @@ import list from './list';
 import edit from './edit';
 
 angular.module('app', [ngMaterial, uirouter, list, edit])
-    .config(($urlRouterProvider, $mdThemingProvider) => {
-        $urlRouterProvider.otherwise('/');
-    });
+  .config(($urlRouterProvider, $mdThemingProvider) => {
+    $urlRouterProvider.otherwise('/');
+  });
