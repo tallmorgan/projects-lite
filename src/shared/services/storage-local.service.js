@@ -1,4 +1,4 @@
-class StorageLocal {
+export class StorageLocal {
   /**
    * Add a value to localStorage
    * @param key

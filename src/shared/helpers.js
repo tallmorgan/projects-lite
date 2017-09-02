@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import {StorageLocal} from './services/storage-local.service';
 
 /**
  * Return a copy of arr without the specified index
@@ -29,4 +30,13 @@ export function fillByIndex(arr, index, props) {
  */
 export function formatMoney(number) {
   return '$' + (+number).toLocaleString();
+}
+
+/**
+ * Helper shortcut for local storage outside of Angular
+ * @param key
+ * @param value
+ */
+export function store(key, value) {
+  return (new StorageLocal).set(key, value);
 }
