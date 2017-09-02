@@ -1,5 +1,5 @@
 import * as actionTypes from '../action-types';
-import {removeByIndex, fillByIndex, store} from '../helpers';
+import {removeByIndex, fillByPredicate, store} from '../helpers';
 
 /**
  * Store Projects in redux
@@ -13,7 +13,7 @@ export default (state = {}, action) => {
   } else if (action.type === actionTypes.PROJECTS_REMOVE) {
     return store('projects', removeByIndex(state, state.indexOf(action.project)));
   } else if (action.type === actionTypes.PROJECTS_EDIT) {
-    return store('projects', fillByIndex(state, state.indexOf(action.project), action.props));
+    return store('projects', fillByPredicate(state, {id: action.project.id}, action.props));
   } else if (action.type === actionTypes.PROJECTS_CREATE) {
     return store('projects', [...state, action.project]);
   } else {

@@ -13,12 +13,14 @@ export function removeByIndex(arr, index) {
 /**
  * Fill a model's props by index
  * @param arr
- * @param index
+ * @param predicate
  * @param props
  */
-export function fillByIndex(arr, index, props) {
+export function fillByPredicate(arr, predicate, props) {
   let clone = _.clone(arr);
+  let index = clone.indexOf(_.find(clone, predicate));
   let model = clone.splice(index, 1)[0];
+  console.log(model, index);
   model.fill(props);
   clone.splice(index, 0, model);
   return clone;
