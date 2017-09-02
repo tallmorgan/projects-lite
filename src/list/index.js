@@ -1,7 +1,7 @@
 import angular from 'angular';
 import uirouter from 'angular-ui-router';
 
-import Projects from '../services/projects.service';
+import Projects from '../shared/services/projects.service';
 import {listcomponent} from './list.component';
 
 export default angular.module('app.list', [uirouter, Projects])
