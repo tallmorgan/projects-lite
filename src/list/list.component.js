@@ -1,8 +1,7 @@
 import template from './list.html';
+import ListController from './list.controller';
 
 export const listcomponent = {
-  bindings: {
-    projects: '<'
-  },
-  template: template
+  template: template,
+  controller: ListController,
 };

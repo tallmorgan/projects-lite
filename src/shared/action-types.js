@@ -1,0 +1,1 @@
+export const PROJECTS_SET = 'PROJECTS_SET';

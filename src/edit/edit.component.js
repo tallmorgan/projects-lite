@@ -1,8 +1,7 @@
 import template from './edit.html';
+import EditController from './edit.controller';
 
 export const editcomponent = {
-  bindings: {
-    project: '<'
-  },
-  template: template
+  template: template,
+  controller: EditController,
 };
