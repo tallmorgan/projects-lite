@@ -10,6 +10,12 @@ export default angular.module('app.edit', [uirouter])
       url: '/edit/:project_id',
       component: 'edit',
     });
+
+    $stateProvider.state({
+      name: 'create',
+      url: '/create',
+      component: 'edit',
+    });
   })
   .name;
 

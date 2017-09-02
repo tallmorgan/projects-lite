@@ -1,4 +1,4 @@
-import {formatMoney} from '../helpers';
+import {formatMoney, sanitizeNumber} from '../helpers';
 
 class FinancialInput {
   /**
@@ -25,8 +25,10 @@ class FinancialInput {
    * Format the input
    */
   updateViewValue() {
-    this.ngModel.$setViewValue(format(this.ngModel.$viewValue));
+    this.ngModel.$viewValue = format(this.ngModel.$viewValue);
     this.ngModel.$render();
+    this.ngModel.$modelValue = this.scope.ngModel = sanitizeNumber(this.ngModel.$viewValue);
+    this.ngModel.$commitViewValue();
   }
 }
 
@@ -36,9 +38,9 @@ class FinancialInput {
  * @returns {*}
  */
 function format(value) {
-  value = formatShortcuts(value);
-  value = formatToNumber(value);
-  return formatMoney(value);
+  value = formatShortcuts(value || '');
+  value = sanitizeNumber(value);
+  return value === 0 ? '' : formatMoney(value);
 }
 
 /**
@@ -57,17 +59,8 @@ function formatShortcuts(value) {
       }
     }
 
-    return formatToNumber(segment);
+    return sanitizeNumber(segment);
   }, 0);
-}
-
-/**
- * Sanitize a string to a number
- * @param value
- */
-function formatToNumber(value) {
-  value = value.toString().replace(/\D+/g, '');
-  return value;
 }
 
 /**

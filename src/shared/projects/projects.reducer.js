@@ -14,6 +14,8 @@ export default (state = {}, action) => {
     return store('projects', removeByIndex(state, state.indexOf(action.project)));
   } else if (action.type === actionTypes.PROJECTS_EDIT) {
     return store('projects', fillByIndex(state, state.indexOf(action.project), action.props));
+  } else if (action.type === actionTypes.PROJECTS_CREATE) {
+    return store('projects', [...state, action.project]);
   } else {
     return state;
   }

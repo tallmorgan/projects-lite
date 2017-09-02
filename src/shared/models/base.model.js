@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default class BaseModel {
   /**
    * Constructor
@@ -16,5 +18,14 @@ export default class BaseModel {
         this[key] = props[key];
       }
     }
+
+    return this;
+  }
+
+  /**
+   * Create a clone of this model
+   */
+  clone() {
+    return _.clone(this);
   }
 }

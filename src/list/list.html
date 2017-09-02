@@ -1,8 +1,10 @@
 <h2>List Projects</h2>
 
+<md-button ui-sref="create" class="md-raised md-primary">Create</md-button>
+
 <md-content>
     <md-list>
-        <md-list-item class="md-3-line" ng-repeat="project in $ctrl.projects">
+        <md-list-item class="md-3-line" ng-repeat="project in $ctrl.projects track by project.id">
             <div class="md-list-item-text">
                 <h3>{{project.headline}}</h3>
                 <h4>Target revenue: {{formatMoney(project.target_revenue_min)}} - {{formatMoney(project.target_revenue_max)}}</h4>

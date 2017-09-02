@@ -29,7 +29,7 @@ export function fillByIndex(arr, index, props) {
  * @param number
  */
 export function formatMoney(number) {
-  return '$' + (+number).toLocaleString();
+  return '$' + (+number || 0).toLocaleString();
 }
 
 /**
@@ -39,4 +39,13 @@ export function formatMoney(number) {
  */
 export function store(key, value) {
   return (new StorageLocal).set(key, value);
+}
+
+/**
+ * Remove non-numerical characters from number string
+ * @param {string} number
+ * @return {number}
+ */
+export function sanitizeNumber(number) {
+  return parseInt(number.toString().replace(/\D+/g, '')) || 0;
 }

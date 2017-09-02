@@ -1,14 +1,16 @@
 import _ from 'lodash';
-import {formatMoney} from '../shared/helpers';
+import Project from '../shared/models/project.model';
 import * as actionTypes from '../shared/action-types';
+import fieldGroups from './edit.fields';
 
 export default class EditController {
   /**
    * Constructor
    */
-  constructor($ngRedux, $scope, $stateParams) {
+  constructor($ngRedux, $scope, $stateParams, $state) {
+    Object.assign(this, {$ngRedux, $scope, $stateParams, $state});
     $scope.$on('$destroy', $ngRedux.connect(state => state, mapDispatch)(this));
-    this.project = this.projects.find((project) => project.id == $stateParams.project_id);
+    this.project = this.projects.find((project) => project.id == $stateParams.project_id) || new Project;
     this.fieldGroups = this.fillDefaults(fieldGroups);
   }
 
@@ -29,6 +31,18 @@ export default class EditController {
 
     return clone;
   }
+
+  /**
+   * Submit the form
+   */
+  submitForm() {
+    this.$scope.projectForm.$setSubmitted();
+
+    if (!this.$scope.projectForm.$invalid) {
+      this.processForm(this);
+      this.$state.go('list');
+    }
+  }
 }
 
 /**
@@ -37,66 +51,24 @@ export default class EditController {
 let mapDispatch = {
   /**
    * Edit or create a project
-   * @param fieldGroups
-   * @param project
    * @returns {object}
    */
-  submitProject: (fieldGroups, project) => {
-    let clone = JSON.parse(JSON.stringify(fieldGroups));
-
-    let fields = _.flattenDeep(clone).map((field) => {
-      field.model = field.financial ? parseInt(field.model.toString().replace(/\D+/g, '')) : field.model;
-      return field;
-    });
-
-    return {
-      type: actionTypes.PROJECTS_EDIT,
-      props: _.chain(fields).keyBy('name').mapValues('model').value(),
-      fields,
-    }
+  processForm: ({fieldGroups, project, projects}) => {
+    let type = project.id ? actionTypes.PROJECTS_EDIT : actionTypes.PROJECTS_CREATE;
+    let fields = _.flattenDeep(JSON.parse(JSON.stringify(fieldGroups))).map(sanitizeFields);
+    let props = _.chain(fields).keyBy('name').mapValues('model').value();
+    props.id = project.id || _.chain(projects).map('id').max().value() + 1 || 1;
+    project = project.clone().fill(props);
+    return {fields, type, project, props};
   }
 };
 
 /**
- * Define each editable field
+ * Sanitize fields for storage
+ * @param field
+ * @returns {*}
  */
-let fieldGroups = [
-  [{
-    title: 'Headline',
-    name: 'headline',
-    model: '',
-  }],
-  [{
-    title: 'Check Size Minimum',
-    name: 'target_check_size_min',
-    model: '',
-    financial: true,
-  }, {
-    title: 'Check Size Maximum',
-    name: 'target_check_size_max',
-    model: '',
-    financial: true,
-  }],
-  [{
-    title: 'Revenue Minimum',
-    name: 'target_revenue_min',
-    model: '',
-    financial: true,
-  }, {
-    title: 'Revenue Maximum',
-    name: 'target_revenue_max',
-    model: '',
-    financial: true,
-  }],
-  [{
-    title: 'EBITDA Minimum',
-    name: 'target_ebitda_min',
-    model: '',
-    financial: true,
-  }, {
-    title: 'EBITDA Maximum',
-    name: 'target_ebitda_max',
-    model: '',
-    financial: true,
-  }],
-];
+function sanitizeFields(field) {
+  field.model = field.financial ? parseInt(field.model.toString().replace(/\D+/g, '')) : field.model;
+  return field;
+}

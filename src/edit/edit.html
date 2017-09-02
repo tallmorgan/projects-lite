@@ -1,4 +1,4 @@
-<h2>Edit {{ $ctrl.project.headline }}</h2>
+<h2 ng-bind="$ctrl.project.headline ? 'Edit ' + $ctrl.project.headline : 'Create new project'"></h2>
 
 <md-content>
     <md-list>
@@ -8,13 +8,16 @@
                     <div layout-gt-sm="row" data-ng-repeat="group in $ctrl.fieldGroups">
                         <md-input-container class="md-block" flex-gt-sm data-ng-repeat="field in group">
                             <label ng-bind="field.title"></label>
-                            <input ng-model="field.model" data-ng-attr-name="{{field.name}}" financial-input ng-if="field.financial">
-                            <input ng-model="field.model" data-ng-attr-name="{{field.name}}" ng-if="!field.financial">
+                            <input ng-model="field.model" data-ng-attr-name="{{field.name}}" ng-if="field.financial"
+                                   financial-input>
+                            <input ng-model="field.model" data-ng-attr-name="{{field.name}}" ng-if="!field.financial"
+                                   required>
                         </md-input-container>
                     </div>
                 </form>
 
-                <md-button ng-click="$ctrl.submitProject($ctrl.fieldGroups, $ctrl.project)" class="md-raised md-primary">Submit</md-button>
+                <md-button ng-click="$ctrl.submitForm()" class="md-raised md-primary">Submit
+                </md-button>
 
                 <md-button ui-sref="list" class="md-raised md-secondary">Cancel</md-button>
             </div>
