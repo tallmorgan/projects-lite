@@ -1,4 +1,5 @@
 import * as actionTypes from '../shared/action-types';
+import {formatMoney} from '../shared/helpers';
 
 export default class ListController {
   /**
@@ -6,6 +7,7 @@ export default class ListController {
    */
   constructor($ngRedux, $scope) {
     $scope.$on('$destroy', $ngRedux.connect(state => state, mapDispatch)(this));
+    Object.assign($scope, {formatMoney});
   }
 }
 

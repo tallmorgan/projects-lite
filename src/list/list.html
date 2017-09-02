@@ -5,8 +5,8 @@
         <md-list-item class="md-3-line" ng-repeat="project in $ctrl.projects">
             <div class="md-list-item-text">
                 <h3>{{project.headline}}</h3>
-                <h4>Target revenue: A - B</h4>
-                <p>Check size: X - Y</p>
+                <h4>Target revenue: {{formatMoney(project.target_revenue_min)}} - {{formatMoney(project.target_revenue_max)}}</h4>
+                <p>Check size: {{formatMoney(project.target_check_size_min)}} - {{formatMoney(project.target_check_size_max)}}</p>
             </div>
             <md-button ui-sref="edit({project_id: project.id})" class="md-raised md-primary">Edit</md-button>
             <md-button ng-click="$ctrl.removeProject(project)" class="md-raised md-warn">Remove</md-button>
