@@ -15,6 +15,9 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'node_modules/angular/angular.min.js',
+      'node_modules/angular-mocks/angular-mocks.js',
+      'src/app.js',
       'test-main.js',
       {pattern: 'test/**/*Spec.js', included: false}
     ],
@@ -26,7 +29,9 @@ module.exports = function (config) {
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    preprocessors: {},
+    preprocessors: {
+      'src/app.js': ['webpack']
+    },
 
 
     // test results reporter to use
@@ -63,6 +68,8 @@ module.exports = function (config) {
 
     // Concurrency level
     // how many browser should be started simultaneous
-    concurrency: Infinity
+    concurrency: Infinity,
+
+    webpack: require('./webpack.config')
   })
 }
