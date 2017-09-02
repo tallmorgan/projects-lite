@@ -50,7 +50,7 @@ function formatShortcuts(value) {
 
     if (matches) {
       for (let shortcut in shortcuts) {
-        if (matches[2] === shortcut) {
+        if (matches[2].toLowerCase() === shortcut) {
           return accrued + (shortcuts[shortcut] * parseFloat(matches[1]));
         }
       }

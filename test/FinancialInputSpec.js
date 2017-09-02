@@ -9,11 +9,12 @@ describe('FinancialInputSpec', () => {
   }));
 
   let shortcutTests = [
-    ['2k', '$2,000'],
-    ['1m', '$1,000,000'],
-    ['3m 500k', '$3,500,000'],
-    ['3.5m', '$3,500,000'],
-    ['3.5m 250k', '$3,750,000'],
+    ['2k', '$2,000'], // standard #1
+    ['1m', '$1,000,000'], // standard #2
+    ['3m 500k', '$3,500,000'], // reduction
+    ['3.5m', '$3,500,000'], // decimals
+    ['3.5m 250k', '$3,750,000'], // mixed decimals/integers
+    ['1.5M', '$1,500,000'], // uppercase
   ];
 
   it('should immediately format', () => {
