@@ -48,6 +48,6 @@ export function store(key, value) {
  * @param {string} number
  * @return {number}
  */
-export function sanitizeNumber(number) {
+export function sanitizeNumber(number = 0) {
   return parseInt(number.toString().replace(/\D+/g, '')) || 0;
 }

@@ -9,7 +9,7 @@
                         <md-input-container class="md-block" flex-gt-sm data-ng-repeat="field in group">
                             <label ng-bind="field.title"></label>
                             <input ng-model="field.model" data-ng-attr-name="{{field.name}}" ng-if="field.financial"
-                                   financial-input>
+                                   financial-input project-form="projectForm" partner-field="field.partnerField">
                             <input ng-model="field.model" data-ng-attr-name="{{field.name}}" ng-if="!field.financial"
                                    required>
                         </md-input-container>

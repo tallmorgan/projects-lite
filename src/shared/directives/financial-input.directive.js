@@ -7,7 +7,18 @@ class FinancialInput {
   constructor(scope, element, attrs, ngModel) {
     Object.assign(this, {scope, element, attrs, ngModel});
     this.initialize();
-    element.on('blur', () => this.updateViewValue());
+    this.bindElement();
+    this.validate();
+  }
+
+  /**
+   * Validate and format element on blur
+   */
+  bindElement() {
+    this.element.on('blur', () => {
+      this.updateViewValue();
+      this.validatePartner();
+    });
   }
 
   /**
@@ -17,6 +28,8 @@ class FinancialInput {
     let unbind = this.scope.$watch(() => {
       this.updateViewValue();
       this.element.triggerHandler('init');
+      this.initialized = true;
+      this.ngModel.$validate();
       unbind();
     });
   }
@@ -30,6 +43,47 @@ class FinancialInput {
     this.ngModel.$modelValue = this.scope.ngModel = sanitizeNumber(this.ngModel.$viewValue);
     this.ngModel.$commitViewValue();
   }
+
+  /**
+   * Ensure that min/max ranges are not reversed
+   */
+  validate() {
+    this.ngModel.$validators.financialMinMax = (value) => {
+      if (this.partner()) {
+        let [partnerValue, thisValue] = [this.partner().$viewValue, value].map(sanitizeNumber);
+
+        if (this.partner().$name.match(/_min$/) && partnerValue > thisValue) {
+          return false;
+        } else if (this.partner().$name.match(/_max$/) && partnerValue < thisValue) {
+          return false;
+        }
+      }
+
+      return true;
+    };
+  }
+
+  /**
+   * Keep partner fields synchronized
+   */
+  validatePartner() {
+    if (this.partner()) {
+      this.partner().$validate();
+    }
+  }
+
+  /**
+   * Safely fetch the partner element
+   *
+   * It might not be ready by the time we request it, e.g. if field 1
+   * immediately requests field 2 during the constructor, the latter
+   * would not yet exist.
+   */
+  partner() {
+    if (this.initialized) {
+      return this.scope.projectForm[this.scope.partnerField];
+    }
+  }
 }
 
 /**
@@ -38,7 +92,7 @@ class FinancialInput {
  * @returns {*}
  */
 function format(value) {
-  value = formatShortcuts(value || '');
+  value = formatShortcuts(value || '');
   value = sanitizeNumber(value);
   return value === 0 ? '' : formatMoney(value);
 }
@@ -79,7 +133,10 @@ export default angular.module('app.financial-input', [])
   .directive('financialInput', () => {
     return {
       restrict: 'A',
-      scope: {},
+      scope: {
+        projectForm: '=',
+        partnerField: '=',
+      },
       require: 'ngModel',
       link: (...args) => new FinancialInput(...args),
     }
