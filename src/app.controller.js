@@ -19,20 +19,7 @@ export default class AppController {
    * redux.
    */
   fetchProjects() {
-    // @todo Remove debug default for projects
-    let projects = this.StorageLocal.get('projects', [
-      {
-        id: 1,
-        headline: 'Funding Strategic Growth in the Restaurant Sector',
-        target_check_size_min: 2000000,
-        target_check_size_max: 10000000,
-        target_revenue_min: 0,
-        target_revenue_max: 50000000,
-        target_ebitda_min: -2000000,
-        target_ebitda_max: 10000000
-      }
-    ]).map((props) => new Project(props));
-
+    let projects = this.StorageLocal.get('projects', []).map((props) => new Project(props));
     this.setProjects(projects);
   }
 }
