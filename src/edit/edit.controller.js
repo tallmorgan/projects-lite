@@ -37,7 +37,7 @@ export default class EditController {
 let mapDispatch = {
   submitProject: (fieldGroups, project) => {
     let fields = _.flattenDeep(fieldGroups).map((field) => {
-      field.model = field.financial ? parseInt(field.model.replace(/\D+/g, '')) : field.model;
+      field.model = field.financial ? parseInt(field.model.toString().replace(/\D+/g, '')) : field.model;
       return field;
     });
 
