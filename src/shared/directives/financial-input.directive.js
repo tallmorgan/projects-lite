@@ -80,7 +80,7 @@ class FinancialInput {
    * would not yet exist.
    */
   partner() {
-    if (this.initialized) {
+    if (this.initialized && this.scope.projectForm) {
       return this.scope.projectForm[this.scope.partnerField];
     }
   }

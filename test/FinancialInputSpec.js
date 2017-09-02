@@ -37,12 +37,12 @@ describe('FinancialInputSpec', () => {
     for (let i = 0, test; test = shortcutTests[i]; i++) {
       promises.push(new Promise((resolve) => {
         let [input, output] = test;
-        let scope = $rootScope.$new(true, $rootScope);
+        let scope = $rootScope.$new();
         scope.dummy = {data: input};
         let element = $compile(defaultInput)(scope);
         element.on('init', () => resolve(expect(element.val()).toBe(output)));
-        $rootScope.$digest();
-      }))
+        scope.$digest();
+      }));
     }
 
     return Promise.all(promises);
@@ -57,11 +57,11 @@ describe('FinancialInputSpec', () => {
     });
   });
 
-  it('should handle invalid input elegantly (and ensure result is a number)', () => {
+  it('should handle invalid input elegantly', () => {
     return new Promise((resolve) => {
       let element = $compile(defaultInput)($rootScope);
       $rootScope.dummy = {data: 'invalid input'};
-      element.on('init', () => resolve(expect(element.val()).toBe('$0')));
+      element.on('init', resolve(expect(element.val()).toBe('')));
       $rootScope.$digest();
     });
   });
