@@ -1,4 +1,5 @@
 import * as actionTypes from '../action-types';
+import {removeByIndex} from '../helpers';
 
 /**
  * Store Projects in redux
@@ -14,13 +15,4 @@ export default (state = {}, action) => {
   } else {
     return state;
   }
-}
-
-/**
- * Return a copy of arr without the specified index
- * @param arr
- * @param index
- */
-function removeByIndex(arr, index) {
-  return arr.slice(0, index).concat(arr.slice(index + 1));
 }
