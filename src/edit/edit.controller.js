@@ -40,7 +40,6 @@ export default class EditController {
 
     if (!this.$scope.projectForm.$invalid) {
       this.processForm(this);
-      this.fieldGroups = this.fillDefaults(fieldGroups); // reset create form
       this.$state.go('list');
     }
   }
