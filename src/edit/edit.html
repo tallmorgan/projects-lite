@@ -13,11 +13,11 @@
                         </md-input-container>
                     </div>
                 </form>
+
+                <md-button ng-click="$ctrl.submitProject($ctrl.fieldGroups, $ctrl.project)" class="md-raised md-primary">Submit</md-button>
+
+                <md-button ui-sref="list" class="md-raised md-secondary">Cancel</md-button>
             </div>
         </md-content>
     </md-list>
 </md-content>
-
-<md-button ng-click="$ctrl.submitProject($ctrl.fieldGroups, $ctrl.project)" class="md-raised md-primary">Submit</md-button>
-
-<md-button ui-sref="list" class="md-raised md-secondary">Cancel</md-button>
