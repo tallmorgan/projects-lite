@@ -8,8 +8,8 @@
                     <div layout-gt-sm="row" data-ng-repeat="group in $ctrl.fieldGroups">
                         <md-input-container class="md-block" flex-gt-sm data-ng-repeat="field in group">
                             <label ng-bind="field.title"></label>
-                            <input ng-model="field.model" data-ng-attr-title="{{field.title}}"
-                                   data-ng-attr-name="{{field.name}}">
+                            <input ng-model="field.model" data-ng-attr-name="{{field.name}}" financial-input ng-if="field.financial">
+                            <input ng-model="field.model" data-ng-attr-name="{{field.name}}" ng-if="!field.financial">
                         </md-input-container>
                     </div>
                 </form>
@@ -17,5 +17,7 @@
         </md-content>
     </md-list>
 </md-content>
+
+<md-button ng-click="$ctrl.submitProject($ctrl.fieldGroups, $ctrl.project)" class="md-raised md-primary">Submit</md-button>
 
 <md-button ui-sref="list" class="md-raised md-secondary">Cancel</md-button>

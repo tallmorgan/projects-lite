@@ -1,4 +1,5 @@
 import * as actionTypes from './shared/action-types';
+import Project from './shared/models/project.model';
 
 export default class AppController {
   /**
@@ -30,7 +31,7 @@ export default class AppController {
         target_ebitda_min: -2000000,
         target_ebitda_max: 10000000
       }
-    ]);
+    ]).map((props) => new Project(props));
 
     this.setProjects(projects);
   }

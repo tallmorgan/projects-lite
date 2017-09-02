@@ -11,9 +11,10 @@ import 'angular-material/angular-material.css';
 import list from './list';
 import edit from './edit';
 import storageLocal from './shared/services/storage-local.service';
+import financialInput from './shared/directives/financial-input.directive';
 import AppComponent from './app.component';
 
-let app = angular.module('app', [ngMaterial, uirouter, list, edit, storageLocal, ngRedux]);
+let app = angular.module('app', [ngMaterial, uirouter, list, edit, storageLocal, ngRedux, financialInput]);
 
 app.config(($urlRouterProvider, $mdThemingProvider) => {
   $urlRouterProvider.otherwise('/');
